@@ -98,6 +98,106 @@ Administrators can:
 
 ---
 
+
+# 🧪 Demo Credentials
+
+ScholarFlow includes pre-configured accounts for testing different user roles.
+
+> **Live Application:** https://scholarflow-frontend-phi.vercel.app/
+
+---
+
+## 👨‍💼 Administrator
+
+| Field | Value |
+|--------|-------|
+| Name | Kakshil Kumar |
+| Email | test@learner.con |
+| Role | ADMIN |
+| Password | 123456 |
+
+### Features Available
+
+- Platform Dashboard
+- User Management
+- Course Management
+- Revenue Analytics
+- Enrollment Analytics
+- Platform Statistics
+
+---
+
+## 👨‍🏫 Instructor
+
+| Field | Value |
+|--------|-------|
+| Name | Teacher |
+| Email | teacher@test.com |
+| Role | INSTRUCTOR |
+| Password | 123456 |
+
+### Features Available
+
+- Create Courses
+- Manage Courses
+- Create Lessons
+- View Students
+- Instructor Analytics
+
+---
+
+## 👨‍🎓 Student
+
+| Field | Value |
+|--------|-------|
+| Name | Student |
+| Email | student@test.com |
+| Role | LEARNER |
+| Password | 123456 |
+
+### Features Available
+
+- Browse Courses
+- Enroll in Courses
+- Access Learning Content
+- AI Learning Assistant
+- My Courses
+
+---
+
+# 📋 Suggested Evaluation Flow
+
+To explore the complete functionality of ScholarFlow, follow the steps below.
+
+### 1. Login as Administrator
+
+- View platform statistics
+- Monitor revenue dashboard
+- Manage users
+- Browse all courses
+- View enrollment analytics
+
+---
+
+### 2. Login as Instructor
+
+- Create a new course
+- Add lessons
+- View enrolled students
+- Monitor instructor analytics
+
+---
+
+### 3. Login as Student
+
+- Browse available courses
+- Enroll in a course
+- Open the learning page
+- Study course lessons
+- Ask questions using the AI Learning Assistant
+
+---
+
 # 🤖 AI Learning Assistant
 
 ScholarFlow integrates Google Gemini AI to provide educational assistance.
