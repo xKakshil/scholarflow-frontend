@@ -17,33 +17,44 @@ export default function AIPage() {
       return;
     }
 
-    try {
-      setLoading(true);
-      setAnswer("");
-      setSources([]);
+    setLoading(true);
+    setAnswer("");
+    setSources([]);
 
-      const res = await api.post("/ai/ask", {
-        question,
-      });
+    const maxRetries = 2;
 
-      setAnswer(res.data.answer);
-      setSources(res.data.sources || []);
-    } catch (error: any) {
-      console.error(error);
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const res = await api.post("/ai/ask", {
+          question,
+        });
 
-      if (error.response?.status === 429) {
-        toast.error(
-          "AI is temporarily busy (free Gemini quota). Please wait a few seconds and try again."
-        );
-      } else {
-        toast.error(
-          error.response?.data?.error ||
-            "AI service is temporarily unavailable."
-        );
+        setAnswer(res.data.answer);
+        setSources(res.data.sources || []);
+        setLoading(false);
+        return;
+      } catch (error: any) {
+        if (attempt < maxRetries) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, 2000)
+          );
+          continue;
+        }
+
+        if (error.response?.status === 429) {
+          toast.error(
+            "AI is busy. Please wait a few seconds and try again."
+          );
+        } else {
+          toast.error(
+            error.response?.data?.error ||
+              "AI service is temporarily unavailable."
+          );
+        }
       }
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   }
 
   return (
@@ -65,24 +76,33 @@ export default function AIPage() {
         />
 
         <button
-          onClick={askAI}
           disabled={loading}
+          onClick={askAI}
           className="bg-black text-white px-6 py-2 rounded-lg mt-4 disabled:opacity-50"
         >
           {loading ? "Thinking..." : "Ask AI"}
         </button>
 
         {loading && (
-          <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-4">
-            <p className="font-semibold text-blue-700">
-              🤖 ScholarFlow AI is thinking...
-            </p>
+          <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-5">
+            <div className="flex items-center gap-3">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-600 border-t-transparent"></div>
 
-            <p className="text-sm text-blue-600 mt-2">
-              Since this project is deployed using free cloud services,
-              the first response may take 10–30 seconds while the server,
-              database, and AI service wake up. Thank you for your patience.
-            </p>
+              <div>
+                <p className="font-semibold text-blue-700">
+                  🤖 ScholarFlow AI is thinking...
+                </p>
+
+                <p className="text-sm text-blue-600 mt-1">
+                  Since ScholarFlow is deployed on free cloud
+                  services, the first AI response may take
+                  10–30 seconds while the server, database,
+                  and AI service wake up.
+                  <br />
+                  Please wait...
+                </p>
+              </div>
+            </div>
           </div>
         )}
       </div>
